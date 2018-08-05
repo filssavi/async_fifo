@@ -20,20 +20,20 @@
 module rptr_empty 
     
     #(
-    parameter ADDRSIZE = 4
+    parameter ASIZE = 4
     )(
-    input  wire                rclk,
-    input  wire                rrst_n,
-    input  wire                rinc,
-    input  wire [ADDRSIZE  :0] rq2_wptr,
-    output reg                 rempty,
-    output reg                 arempty,
-    output wire [ADDRSIZE-1:0] raddr,
-    output reg  [ADDRSIZE  :0] rptr
+    input  wire             rclk,
+    input  wire             rrst_n,
+    input  wire             rinc,
+    input  wire [ASIZE  :0] rq2_wptr,
+    output reg              rempty,
+    output reg              arempty,
+    output wire [ASIZE-1:0] raddr,
+    output reg  [ASIZE  :0] rptr
     );
     
-    reg  [ADDRSIZE:0] rbin;
-    wire [ADDRSIZE:0] rgraynext, rbinnext, rgraynextm1;
+    reg  [ASIZE:0] rbin;
+    wire [ASIZE:0] rgraynext, rbinnext, rgraynextm1;
     wire              arempty_val, rempty_val;
 
     //-------------------
@@ -49,7 +49,7 @@ module rptr_empty
     end
     
     // Memory read-address pointer (okay to use binary to address memory)
-    assign raddr     = rbin[ADDRSIZE-1:0];
+    assign raddr     = rbin[ASIZE-1:0];
     assign rbinnext  = rbin + (rinc & ~rempty);
     assign rgraynext = (rbinnext >> 1) ^ rbinnext;
     assign rgraynextm1 = ((rbinnext + 1'b1) >> 1) ^ (rbinnext + 1'b1);
